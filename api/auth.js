@@ -30,5 +30,9 @@ module.exports = app => {
         }
     }
 
-    return { signin }
+    const initial = (req, res) => {
+        res.status(200).send('Working!!')
+    }
+
+    return { signin, initial }
 }
