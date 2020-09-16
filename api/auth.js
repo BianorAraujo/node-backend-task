@@ -22,7 +22,7 @@ module.exports = app => {
                 res.json({
                     name: user.name,
                     email: user.email,
-                    token: jwt.encode(payload, process.env.authSecret)
+                    token: jwt.encode(payload, authSecret)
                 })
             })
         } else {

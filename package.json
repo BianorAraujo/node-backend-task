@@ -4,8 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "postinstall": "knex migrate:latest"
+    "start": "app.js"
   },
   "keywords": [],
   "author": "",
