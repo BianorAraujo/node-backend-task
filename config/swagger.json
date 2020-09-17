@@ -1,0 +1,160 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "version": "1.0.0",
+        "title": "Tasks API - Node js",
+        "description": "API for Tasks application",
+        "termsOfService": "https://mobiletasks.herokuapp.com/terms/",
+        "contact": {
+            "name": "Bianor Araujo",
+            "email": "bianor.araujo@gmail.com",
+            "url": "https://mobiletasks.herokuapp.com/"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/",
+            "description": "Local server"
+        },
+        {
+            "url": "https://mobiletasks.herokuapp.com/",
+            "description": "Testing server"
+        },
+        {
+            "url": "https://api_url_production",
+            "description": "Production server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Signup"
+        },
+        {
+            "name": "Signin"
+        },
+        {
+            "name": "Tasks"
+        }
+    ],
+    "paths": {
+        "/signup": {
+            "post": {
+                "security": {
+                    
+                },
+                "description": "Register a new user to be able to use the api",
+                "tags":[  
+                    "Signup"
+                ],
+                "requestBody": {  
+                    "description":"A JSON object containing the properties below",
+                    "required":"true",
+                    "content":{  
+                       "application/json":{  
+                            "schema":{  
+                                "type":"object",
+                                "required":[  
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties":{  
+                                    "name":{  
+                                        "type":"Joao"
+                                    },
+                                    "email":{  
+                                        "type":"joao123@email.com"
+                                    },
+                                    "password":{  
+                                        "type":"123!@#"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {  
+                                    "type":"object",
+                                    "required":[  
+                                        "name",
+                                        "email",
+                                        "token"
+                                    ],
+                                    "properties":{  
+                                        "name":{  
+                                            "type":"string"
+                                        },
+                                        "email":{  
+                                            "type":"string"
+                                        },
+                                        "token":{  
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example": {
+                                        "name": "Joao",
+                                        "email": "joao123@email.com",
+                                        "token": "ayJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6M30.4vWyUiu2Ry4heP8EZKBSt6ZDV3BSvxWLxZbC4YbE7b9"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks": {
+            "get": {
+                "description": "Get tasks registered by a user",
+                "tags": [
+                    "Tasks"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type":"object",
+                                    "required":[  
+                                        "id",
+                                        "desc",
+                                        "estimateAt",
+                                        "doneAt",
+                                        "userId"
+                                    ]
+                                },
+                                "example": {
+                                    "id": 7,
+                                    "desc": "Tarefa 1",
+                                    "estimateAt": "2020-08-26T03:00:00.000Z",
+                                    "doneAt": null,
+                                    "userId": 2
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ]
+}
