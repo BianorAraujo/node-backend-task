@@ -1,6 +1,8 @@
-const { authSecret } = require('../.env')
+//const { authSecret } = require('../.env')
 const jwt = require('jwt-simple')
 const bcrypt = require('bcrypt-nodejs')
+
+const authSec = process.env.authSecret || authSecret
 
 module.exports = app => {
     const signin = async (req, res) => {
@@ -22,7 +24,7 @@ module.exports = app => {
                 res.json({
                     name: user.name,
                     email: user.email,
-                    token: jwt.encode(payload, authSecret)
+                    token: jwt.encode(payload, authSec)
                 })
             })
         } else {
@@ -30,5 +32,15 @@ module.exports = app => {
         }
     }
 
-    return { signin }
+    const initial = (req, res) => {
+        res.status(200).send('Working!!')
+        //     () =>{
+        //     return () {
+        //         <h1>Task API - Node js</h1><br/>
+        //             <a href="/api-docs">Documentation</a>
+        //     }
+        // })
+    }
+
+    return { signin, initial }
 }
