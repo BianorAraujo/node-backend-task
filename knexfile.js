@@ -1,23 +1,22 @@
 // Update with your config settings.
 
-module.exports = {
-
-  // development: {
-    // client: 'postgresql',
-    // connection: {
-    //   database: 'tasks',
-    //   user:     'postgres',
-    //   password: 'Postgre123'
-    // },
-    // pool: {
-    //   min: 2,
-    //   max: 10
-    // },
-    // migrations: {
-    //   tableName: 'knex_migrations'
-    // }
-  // },
-  // production: {
+var myPostgreConfig = {
+  development: {
+    client: 'postgresql',
+    connection: {
+      database: 'tasks',
+      user: 'postgres',
+      password: 'Postgre123'
+    },
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      tableName: 'knex_migrations'
+    }
+  },
+  production: {
     client: 'postgresql',
     connection: process.env.DATABASE_URL,
     pool: {
@@ -27,6 +26,7 @@ module.exports = {
     migrations: {
       tableName: 'knex_migrations'
     }
-  // }
+  }
+}
 
-};
+module.exports = myPostgreConfig
