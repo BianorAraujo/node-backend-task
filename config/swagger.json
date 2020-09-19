@@ -1,14 +1,12 @@
 {
     "openapi": "3.0.1",
     "info": {
-        "version": "1.0.0",
+        "version": "1.1.0",
         "title": "Tasks API - Node js",
         "description": "API for Tasks application",
-        "termsOfService": "https://mobiletasks.herokuapp.com/terms/",
         "contact": {
             "name": "Bianor Araujo",
-            "email": "bianor.araujo@gmail.com",
-            "url": "https://mobiletasks.herokuapp.com/"
+            "email": "bianor.araujo@gmail.com"
         }
     },
     "servers": [
@@ -19,10 +17,6 @@
         {
             "url": "https://mobiletasks.herokuapp.com/",
             "description": "Testing server"
-        },
-        {
-            "url": "https://api_url_production",
-            "description": "Production server"
         }
     ],
     "tags": [
@@ -39,9 +33,7 @@
     "paths": {
         "/signup": {
             "post": {
-                "security": {
-                    
-                },
+                "security": { },
                 "description": "Register a new user to be able to use the api",
                 "tags":[  
                     "Signup"
@@ -60,14 +52,19 @@
                                 ],
                                 "properties":{  
                                     "name":{  
-                                        "type":"Joao"
+                                        "type":"string"
                                     },
                                     "email":{  
-                                        "type":"joao123@email.com"
+                                        "type":"string"
                                     },
                                     "password":{  
-                                        "type":"123!@#"
+                                        "type":"string"
                                     }
+                                },
+                                "example": {
+                                    "name": "Joao",
+                                    "email": "joao123@email.com",
+                                    "password": "123!@#"
                                 }
                             }
                         }
@@ -86,6 +83,75 @@
                                         "token"
                                     ],
                                     "properties":{  
+                                        "name":{  
+                                            "type":"string"
+                                        },
+                                        "email":{  
+                                            "type":"string"
+                                        },
+                                        "token":{  
+                                            "type":"string"
+                                        }
+                                    },
+                                    "example": {
+                                        "name": "Joao",
+                                        "email": "joao123@email.com",
+                                        "token": "ayJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6M30.4vWyUiu2Ry4heP8EZKBSt6ZDV3BSvxWLxZbC4YbE7b9"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/signin": {
+            "post":{
+                "security": { },
+                "description": "Logs the user into the system and returns the access token",
+                "tags": [
+                    "Signin"
+                ],
+                "requestBody": {  
+                    "description":"A JSON object containing the properties below",
+                    "required":"true",
+                    "content":{  
+                       "application/json":{  
+                            "schema":{  
+                                "type":"object",
+                                "required":[
+                                    "email",
+                                    "password"
+                                ],
+                                "properties":{
+                                    "email":{  
+                                        "type":"string"
+                                    },
+                                    "password":{  
+                                        "type":"string"
+                                    }
+                                },
+                                "example": {
+                                    "email": "joao123@email.com",
+                                    "password": "123!@#"
+                                }                                
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type":"object",
+                                    "required":[  
+                                        "name",
+                                        "email",
+                                        "token"
+                                    ],
+                                    "properties":{
                                         "name":{  
                                             "type":"string"
                                         },
@@ -127,16 +193,127 @@
                                         "estimateAt",
                                         "doneAt",
                                         "userId"
-                                    ]
-                                },
-                                "example": {
-                                    "id": 7,
-                                    "desc": "Tarefa 1",
-                                    "estimateAt": "2020-08-26T03:00:00.000Z",
-                                    "doneAt": null,
-                                    "userId": 2
+                                    ],
+                                    "properties":{
+                                        "id":{  
+                                            "type":"integer"
+                                        },
+                                        "desc":{  
+                                            "type":"string"
+                                        },
+                                        "estimateAt":{  
+                                            "type":"datetime"
+                                        },
+                                        "doneAt":{  
+                                            "type":"datetime"
+                                        },
+                                        "userId":{  
+                                            "type":"integer"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": 7,
+                                        "desc": "Tarefa 1",
+                                        "estimateAt": "2020-08-26T03:00:00.000Z",
+                                        "doneAt": null,
+                                        "userId": 2
+                                    }
                                 }
                             }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Save your tasks",
+                "tags": [
+                    "Tasks"
+                ],
+                "requestBody": {  
+                    "description":"A JSON object containing the properties below",
+                    "required":"true",
+                    "content":{  
+                       "application/json":{  
+                            "schema":{  
+                                "type":"object",
+                                "required":[  
+                                    "desc",
+                                    "estimateAt"
+                                ],
+                                "properties":{  
+                                    "desc":{  
+                                        "type":"string"
+                                    },
+                                    "estimateAt":{  
+                                        "type":"string"
+                                    }
+                                },
+                                "example": {
+                                    "desc": "Tarefa 1",
+                                    "estimateAt": "2020-08-26"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "content": {
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{id}/toggle": {
+            "put": {
+                "description": "Toggle a task between completed and not completed.",
+                "tags": [
+                    "Tasks"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Task id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "content": {
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{id}": {
+            "delete": {
+                "description": "Delete tasks registered by a user",
+                "tags": [
+                    "Tasks"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Task id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "content": {
                         }
                     }
                 }
