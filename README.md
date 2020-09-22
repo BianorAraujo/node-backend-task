@@ -1,7 +1,9 @@
 # node-backend-task
 
-Backend repository for a Tasks application in NodeJs
+Api created in Node js for task applications
 
+
+!(https://github.com/BianorAraujo/node-backend-task/blob/master/img/api-docs.png)
 
 
 You can access the api here: [Tasks API - Node js](https://mobiletasks.herokuapp.com/api-docs)
